@@ -4,6 +4,7 @@ import Earth from '../sprites/Earth'
 import Asteroid from '../sprites/Asteroid'
 import Junker from '../sprites/Junker'
 import { bindKeymap } from '../utils/bind'
+import { DEFAULTS } from '../config'
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
@@ -20,7 +21,9 @@ export default class GameScene extends Phaser.Scene {
       x: 400,
       y: 300,
       mass: 100000,
-    })
+    }).setScale(...DEFAULTS.scale.earth)
+
+    this.earth.track()
 
     const keymap = {
         SPACE: {
@@ -56,7 +59,7 @@ export default class GameScene extends Phaser.Scene {
 
 
   update() {
-      console.log(this.player)
+    //   console.log(this.player)
   }
 
 
