@@ -30,7 +30,7 @@ module.exports = {
 	entry: './src/index.js',
 
 	output: {
-		filename: '[name].[chunkhash].js',
+		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist')
 	},
 
@@ -76,6 +76,14 @@ module.exports = {
 	},
 
 	devServer: {
-		open: true
-	}
+		open: true,
+		
+	},
+
+	plugins: [
+		new webpack.DefinePlugin({
+			CANVAS_RENDERER: JSON.stringify(true),
+			WEBGL_RENDERER: JSON.stringify(true),
+		})
+	]
 };
