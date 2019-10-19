@@ -7,7 +7,8 @@ export default class extends Phaser.Scene {
 
     preload() {
         console.log('loading assets')
-        // Load assets here
+        this.load.image('earth', 'src/assets/pixel-earth.png');
+        this.load.image('earth', 'src/assets/pixel-asteroid.png');
     }
 
     update () {
