@@ -10,7 +10,9 @@ export default class GameScene extends Phaser.Scene {
     super({ key: 'GameScene' })
   }
   init () {}
-  preload () {}
+  preload () {
+    this.load.json('physics-bodies', 'src/asset/physics.json')
+  }
 
   create () {
     this.matter.enableAttractorPlugin()
@@ -53,12 +55,6 @@ export default class GameScene extends Phaser.Scene {
 
     bindKeymap(this, keymap)
   }
-
-
-  update() {
-      console.log(this.player)
-  }
-
 
   _toggleTrack() {
         switch(this._tracked) {

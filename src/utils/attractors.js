@@ -35,8 +35,6 @@ export function junkerAttractor(junker, other) {
 }
 
 export function calculateAttraction(attractor, attractee) {
-    
-    console.log("%s attracting %s", goName(attractor), goName(attractee))
     if (goName(attractor) === 'EarthSprite') {
         return {
             x: Math.sign(attractor.position.x - attractee.position.x) * 0.00001,
