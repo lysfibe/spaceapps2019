@@ -6,5 +6,11 @@ export default {
   parent: 'content',
   width: 800,
   height: 600,
-  localStorageName: 'thesunneversets'
+  localStorageName: 'thesunneversets',
+  physics: {
+    default: "matter",
+    matter: {
+        // debug: true
+    }
+  }
 }
