@@ -19,19 +19,26 @@ export default class GameScene extends Phaser.Scene {
       asset: 'earth'
     })
 
-    this.asteroid = new Asteroid({
-        scene: this,
-        x: 400,
-        y: 100,
-        asset: 'asteroid',
-    })
-
-
     
     this.player = new Junker({ scene: this, x: 500, y: 200, asset: 'junker' })
-    // this.add.existing(this.earth)
-    this.matter.add.image(400, 300, 'earth', null, { isStatic: true })
-    // this.matter.add.image(400, -100, 'asteroid')
-    this.player.track()
+
+    this.spaceKey = this.input.keyboard.addKey('SPACE')
+    this.spaceKey.on('down', () => this._toggleTrack())
+  }
+
+  _toggleTrack() {
+        switch(this._tracked) {
+            case 'player': {
+                this.earth.track()
+                this._tracked = 'earth'
+                break
+            }
+            case 'earth':
+            default: {
+                this.player.track()
+                this._tracked = 'player'
+                break;
+            }
+        }
   }
 }

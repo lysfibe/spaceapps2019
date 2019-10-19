@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-export default class extends Phaser.Physics.Matter.Sprite {
+export default class MatterSprite extends Phaser.Physics.Matter.Sprite {
     constructor ({ scene, x, y, asset }) {
         super(scene.matter.world, x, y, asset)
         scene.add.existing(this)
@@ -12,12 +12,5 @@ export default class extends Phaser.Physics.Matter.Sprite {
 
         camera.setLerp(0.1, 0.1)
         camera.startFollow(this)
-    }
-
-    untrack() {
-        const camera = this._scene.cameras.main
-        
-        camera.setLerp(1, 1)
-        camera.stopFollow()
     }
 }
