@@ -13,6 +13,8 @@ export default class GameScene extends Phaser.Scene {
   preload () {}
 
   create () {
+    this.matter.enableAttractorPlugin()
+
     this.earth = new Earth({
       scene: this,
       x: 400,

@@ -1,11 +1,16 @@
 import Phaser from 'phaser'
+import { calculateAttraction } from '../utils/attractors'
 
 export default class MatterSprite extends Phaser.Physics.Matter.Sprite {
-    constructor ({ scene, x, y, asset, mass = 1 }) {
-        super(scene.matter.world, x, y, asset)
+    constructor ({ scene, x, y, asset, mass = 1, attractor }) {
+        super(scene.matter.world, x, y, asset, null, {
+            plugin: {
+                attractors: [attractor].filter(Boolean)
+            }
+        })
         scene.add.existing(this)
-        console.log(asset, mass)
         this.setMass(mass)
+        this.setFriction(0)
         this._scene = scene
     }
 
