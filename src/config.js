@@ -11,6 +11,9 @@ export default {
     default: "matter",
     matter: {
         // debug: true
-    }
+        gravity: {
+          scale: 0,
+        },
+    },
   }
 }

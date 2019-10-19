@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-export default class extends Phaser.Scene {
+export default class BootScene extends Phaser.Scene {
     constructor() {
         super({ key: 'BootScene' })
     }
@@ -9,6 +9,7 @@ export default class extends Phaser.Scene {
         console.log('loading assets')
         this.load.image('earth', 'src/assets/pixel-earth.png');
         this.load.image('asteroid', 'src/assets/pixel-asteroid.png');
+        this.load.image('junker', 'src/assets/junk-collector.png');
     }
 
     update () {
