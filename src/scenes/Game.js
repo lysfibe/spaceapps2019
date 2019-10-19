@@ -6,6 +6,8 @@ import Junker from '../sprites/Junker'
 import { bindKeymap } from '../utils/bind'
 import { DEFAULTS } from '../config'
 
+import physicsConfig from '../assets/physics.json'
+
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
@@ -57,12 +59,6 @@ export default class GameScene extends Phaser.Scene {
 
     bindKeymap(this, keymap)
   }
-
-
-  update() {
-    //   console.log(this.player)
-  }
-
 
   _toggleTrack() {
         switch(this._tracked) {

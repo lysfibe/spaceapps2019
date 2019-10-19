@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Webpack Simple Example</title>
+    <title>Space Game</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        #content {
+            width: fit-content;
+            height: fit-content;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
+    <div id=content></div>
     <script src="/bundle.js"></script>
 </body>
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-    }
-    canvas {
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-    }
-</style>
 </html>

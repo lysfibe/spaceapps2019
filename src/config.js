@@ -10,10 +10,10 @@ export default {
   physics: {
     default: "matter",
     matter: {
-        // debug: true
-        gravity: {
-          scale: 0,
-        },
+      // debug: true,
+      gravity: {
+        scale: 0,
+      },
     },
   }
 }
