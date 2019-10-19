@@ -4,6 +4,12 @@ import { DEFAULTS } from '../config'
 
 export default class AsteriodSprite extends MatterSprite {
   constructor (props) {
-    super({ asset: 'asteroid', mass: DEFAULTS.mass.asteroid, ...props })
+    const { scaleX, scaleY, ...rest } = props
+
+    super({ asset: 'asteroid', mass: DEFAULTS.mass.asteroid, ...rest })
+      .setScale(
+        scaleX ? scaleX : DEFAULTS.scale.asteroid.x,
+        scaleY ? scaleY : DEFAULTS.scale.asteroid.y,
+      )
   }
 }

@@ -14,8 +14,8 @@ export function earthAttractor(earth, other) {
     const distance = Math.abs(mag(other.position, earth.position))
     const d2 = distance^2;
     return  {
-        x: Math.sign(earth.position.x - other.position.x) * 0.0002/d2,
-        y: Math.sign(earth.position.y - other.position.y) * 0.0002/d2,
+        x: Math.sign(earth.position.x - other.position.x) * 0.002/d2,
+        y: Math.sign(earth.position.y - other.position.y) * 0.002/d2,
     }
 }
 

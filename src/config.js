@@ -20,13 +20,22 @@ export default {
 
 export const DEFAULTS = {
   mass: {
-    asteroid: 10,
-    junker: 25,
+    asteroid: 50,
+    junker: 30,
     earth: 10000,
   },
   scale: {
-    asteroid: [0.05, 0.05],
-    junker: [0.7, 0.7],
-    earth: [0.5, 0.5]
+    asteroid: {
+      x: 0.05,
+      y: 0.05
+    },
+    junker: {
+      x: 0.7,
+      y: 0.7
+    },
+    earth: {
+      x: 0.5,
+      y: 0.5
+    }
   }
 }
