@@ -25,8 +25,8 @@ export const DEFAULTS = {
     earth: 10000,
   },
   scale: {
-    asteroid: [0.2, 0.2],
-    junker: [1, 1],
-    earth: [0.8, 0.8]
+    asteroid: [0.05, 0.05],
+    junker: [0.7, 0.7],
+    earth: [0.5, 0.5]
   }
 }
