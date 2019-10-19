@@ -48,7 +48,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     this.asteroids = [
-        new Asteroid({ scene: this, x: 100, y: 200, asset: 'asteroid' })
+        new Asteroid({ scene: this, x: 100, y: 200, asset: 'asteroid'}).setScale(0.1, 0.1)
     ]
 
     bindKeymap(this, keymap)
