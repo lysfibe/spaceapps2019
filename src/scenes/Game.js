@@ -4,6 +4,7 @@ import Earth from '../sprites/Earth'
 import Asteroid from '../sprites/Asteroid'
 import Junker from '../sprites/Junker'
 import { bindKeymap } from '../utils/bind'
+import { DEFAULTS } from '../config'
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
@@ -13,12 +14,16 @@ export default class GameScene extends Phaser.Scene {
   preload () {}
 
   create () {
+    this.matter.enableAttractorPlugin()
+
     this.earth = new Earth({
       scene: this,
       x: 400,
       y: 300,
       mass: 100000,
-    })
+    }).setScale(...DEFAULTS.scale.earth)
+
+    this.earth.track()
 
     const keymap = {
         SPACE: {
@@ -38,15 +43,25 @@ export default class GameScene extends Phaser.Scene {
         },
     }
     
-    this.player = new Junker({ scene: this, x: 500, y: 200 })
+    this.player = new Junker({ scene: this, x: 500, y: 200 }).setScale(...DEFAULTS.scale.junker)
 
     const movePlayer = (x, y) => {
         const force = new Phaser.Math.Vector2(x, y)
         this.player.applyForce(force)
     }
 
+    this.asteroids = [
+        new Asteroid({ scene: this, x: 100, y: 200, asset: 'asteroid'}).setScale(...DEFAULTS.scale.asteroid)
+    ]
+
     bindKeymap(this, keymap)
   }
+
+
+  update() {
+    //   console.log(this.player)
+  }
+
 
   _toggleTrack() {
         switch(this._tracked) {

@@ -34,6 +34,8 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist')
 	},
 
+	devtool: 'source-maps',
+
 	plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin()],
 
 	module: {
