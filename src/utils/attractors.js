@@ -11,6 +11,7 @@ function mag(posA, posB) {
 }
 
 export function earthAttractor(earth, other) {
+    console.log(earth, other)
     return  {
         x: Math.sign(earth.position.x - other.position.x) * 0.0001,
         y: Math.sign(earth.position.y - other.position.y) * 0.0001,
@@ -18,6 +19,7 @@ export function earthAttractor(earth, other) {
 }
 
 export function junkerAttractor(junker, other) {
+    console.log(junker, other)
     if (goName(other) === 'EarthSprite') {
         return 0
     }

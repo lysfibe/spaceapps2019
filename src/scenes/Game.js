@@ -6,14 +6,14 @@ import Junker from '../sprites/Junker'
 import { bindKeymap } from '../utils/bind'
 import { DEFAULTS } from '../config'
 
+import physicsConfig from '../assets/physics.json'
+
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
   }
   init () {}
-  preload () {
-    this.load.json('physics-bodies', 'src/asset/physics.json')
-  }
+  preload () {}
 
   create () {
     this.matter.enableAttractorPlugin()
@@ -23,7 +23,7 @@ export default class GameScene extends Phaser.Scene {
       x: 400,
       y: 300,
       mass: 100000,
-    }).setScale(...DEFAULTS.scale.earth)
+    })
 
     this.earth.track()
 
@@ -53,7 +53,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     this.asteroids = [
-        new Asteroid({ scene: this, x: 100, y: 200, asset: 'asteroid'}).setScale(0.1, 0.1)
+        new Asteroid({ scene: this, x: 100, y: 200, asset: 'asteroid' })
     ]
 
     bindKeymap(this, keymap)
