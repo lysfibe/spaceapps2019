@@ -50,6 +50,12 @@ function process(raw) {
       const oLen = Math.cos(angleRad) * hLen;
       d.x = toCoordinate(aLen); // Negative => Left, Positive => Right
       d.y = toCoordinate(oLen) * -1; // Negative => Up, Positive => Down
+
+      // Calculate component velocity
+      const v = d.satInfo.velocity * 1000;
+      d.dx = toCoordinate(Math.cos(angleRad) * v);
+      d.dy = 0-toCoordinate(Math.sin(angleRad) * v);
+
       return d;
     })
     // Remove items that are below the minimum required altitude
