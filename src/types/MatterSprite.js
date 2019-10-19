@@ -10,6 +10,7 @@ export default class MatterSprite extends Phaser.Physics.Matter.Sprite {
         })
         scene.add.existing(this)
         this.setMass(mass)
+        this.setFrictionAir(0)
         this.setFriction(0)
         this._scene = scene
     }
