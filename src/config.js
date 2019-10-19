@@ -17,3 +17,11 @@ export default {
     },
   }
 }
+
+export const DEFAULTS = {
+  mass: {
+    asteroid: 5,
+    junker: 10,
+    earth: 10000,
+  },
+}
