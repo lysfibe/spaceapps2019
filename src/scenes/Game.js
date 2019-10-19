@@ -50,9 +50,10 @@ export default class GameScene extends Phaser.Scene {
         this.player.applyForce(force)
     }
 
-    this.asteroids = [
-        new Asteroid({ scene: this, x: 0, y: -100, asset: 'asteroid' }).setVelocityX(3)
-    ]
+    // this.asteroids = [
+    //     new Asteroid({ scene: this, x: 0, y: -100, asset: 'asteroid' }).setVelocityX(10)
+    // ]
+    this.asteroids = this.importAsteroids({scene:this})
 
     bindKeymap(this, keymap)
   }
@@ -77,5 +78,12 @@ export default class GameScene extends Phaser.Scene {
                 break;
             }
         }
+  }
+
+  importAsteroids({scene}){
+    const data = require('../data/full.json')
+    return data.map(d=>{
+        new Asteroid({scene, x:d.x, y:d.y, velocityX:d.dx, velocityY:d.dy, asset: 'asteroid'})
+    })
   }
 }
