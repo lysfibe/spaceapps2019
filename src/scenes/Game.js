@@ -47,8 +47,18 @@ export default class GameScene extends Phaser.Scene {
         this.player.applyForce(force)
     }
 
+    this.asteroids = [
+        new Asteroid({ scene: this, x: 100, y: 200, asset: 'asteroid' })
+    ]
+
     bindKeymap(this, keymap)
   }
+
+
+  update() {
+      console.log(this.player)
+  }
+
 
   _toggleTrack() {
         switch(this._tracked) {

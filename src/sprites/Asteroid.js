@@ -1,7 +1,8 @@
 import Phaser from 'phaser'
+import MatterSprite from '../types/MatterSprite'
 
-export default class extends Phaser.GameObjects.Sprite {
-  constructor ({ scene, x, y, asset }) {
-    super(scene, x, y, asset)
+export default class extends MatterSprite {
+  constructor (props) {
+    super({ asset: 'asteroid', mass: 3, ...props })
   }
 }
