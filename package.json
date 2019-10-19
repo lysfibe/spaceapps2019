@@ -4,6 +4,7 @@
   "description": "My webpack project",
   "main": "index.js",
   "dependencies": {
+    "matter-js": "^0.14.2",
     "phaser": "^3.20.1",
     "webfontloader": "^1.6.28"
   },
