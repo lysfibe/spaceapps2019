@@ -18,10 +18,10 @@ export default class GameScene extends Phaser.Scene {
 
     this.earth = new Earth({
       scene: this,
-      x: 400,
-      y: 300,
+      x: 0,
+      y: 0,
       mass: 100000,
-    }).setScale(...DEFAULTS.scale.earth)
+    })
 
     this.earth.track()
 
@@ -43,7 +43,7 @@ export default class GameScene extends Phaser.Scene {
         },
     }
     
-    this.player = new Junker({ scene: this, x: 500, y: 200 }).setScale(...DEFAULTS.scale.junker)
+    this.player = new Junker({ scene: this, x: 500, y: 200 })
 
     const movePlayer = (x, y) => {
         const force = new Phaser.Math.Vector2(x, y)
@@ -51,7 +51,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     this.asteroids = [
-        new Asteroid({ scene: this, x: 100, y: 200, asset: 'asteroid'}).setScale(...DEFAULTS.scale.asteroid)
+        new Asteroid({ scene: this, x: 100, y: 200, asset: 'asteroid' })
     ]
 
     bindKeymap(this, keymap)
