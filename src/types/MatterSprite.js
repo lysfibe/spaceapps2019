@@ -1,9 +1,11 @@
 import Phaser from 'phaser'
 
 export default class MatterSprite extends Phaser.Physics.Matter.Sprite {
-    constructor ({ scene, x, y, asset }) {
+    constructor ({ scene, x, y, asset, mass = 1 }) {
         super(scene.matter.world, x, y, asset)
         scene.add.existing(this)
+        console.log(asset, mass)
+        this.setMass(mass)
         this._scene = scene
     }
 
