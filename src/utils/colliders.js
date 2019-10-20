@@ -20,9 +20,7 @@ export function earthCollider(scene, a, b) {
         other.gameObject.wreck()
         scene.player.kaching(100)
     } else if (other.gameObject.name === 'junker') {
-        scene.leaderboard.addRecord(scene.player.wonga)
-        alert('OH NO!')
-        other.gameObject.wreck()
+        scene.onLose()
     }
 
     return true
