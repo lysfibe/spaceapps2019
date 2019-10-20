@@ -1,6 +1,6 @@
 # 🚀 Junker: Impact!
 
-[Live demo](junker.lysfibe.co.uk)
+[Live demo](https://junker.lysfibe.co.uk)
 
 ## Project Description
 
