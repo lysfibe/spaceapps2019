@@ -22,8 +22,12 @@ export default class JunkerSprite extends MatterSprite {
         this.wonga = 0
         this.turnSpeed = 3
         this.thrustSpeed = 0.003
+
         this.magnetStrength = 0.001
         this.magnetOn = false
+        
+        this.repelModifier = 1
+        this.repelTimeout = null
     }
     
     update(t, d) {
@@ -57,6 +61,24 @@ export default class JunkerSprite extends MatterSprite {
         if (this.expend(1)) {
             this.magnetOn = true
         }
+    }
+
+    repelObjects(time) {
+        if (!this.expend(1000)) {
+            return false
+        }
+
+        if (this.repelTimeout) {
+            clearTimeout(this.repelTimeout)
+        }
+
+        this.repelModifier = -4
+        this.repelTimeout = setTimeout(() => {
+            this.repelModifier = 1
+            this.repelTimeout = null
+        }, time)
+
+        return true
     }
 
     expend(amount) {

@@ -7,7 +7,7 @@ import { bindKeymap } from '../utils/bind'
 import { DEFAULTS } from '../config'
 
 import asteroidData from '../data/full.json'
-import { earthCollider } from '../utils/colliders'
+import { earthCollider, asteroidShipCollider } from '../utils/colliders'
 import CashTracker from '../ui/CashTracker'
 import EnergyBar from '../ui/EnergyBar'
 import Leaderboard from '../ui/Leaderboard'
@@ -72,6 +72,7 @@ export default class GameScene extends Phaser.Scene {
 
     const colliders = [
         earthCollider,
+        asteroidShipCollider,
     ]
     this.matter.world.on('collisionstart', (ctx, entityA, entityB) => {
         colliders.reduce((handled, current) => handled || current(this, entityA, entityB), false)

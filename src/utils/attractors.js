@@ -36,8 +36,8 @@ export function junkerAttractor(junker, other) {
     // Pull towards
     else{
         return {
-            x: Math.sign(junker.position.x - other.position.x) * magnetism,
-            y: Math.sign(junker.position.y - other.position.y) * magnetism,
+            x: Math.sign(junker.position.x - other.position.x) * magnetism * junker.gameObject.repelModifier,
+            y: Math.sign(junker.position.y - other.position.y) * magnetism * junker.gameObject.repelModifier,
         }
     }
 }
