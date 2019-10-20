@@ -50,7 +50,7 @@ export function asteroidShipCollider(scene, a, b) {
         return false
     }
 
-    if (player.gameObject.repelObjects(100)) {
+    if (player.gameObject.repelObjects(600)) {
         return true
     } else {
         scene.onLose()

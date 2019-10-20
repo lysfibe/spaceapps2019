@@ -67,7 +67,7 @@ export default class JunkerSprite extends MatterSprite {
     }
 
     repelObjects(time) {
-        if (!this.expend(250)) {
+        if (!this.expend(1000)) {
             return false
         }
 
@@ -75,7 +75,7 @@ export default class JunkerSprite extends MatterSprite {
             clearTimeout(this.repelTimeout)
         }
 
-        this.repelModifier = -5
+        this.repelModifier = -4
         this.repelTimeout = setTimeout(() => {
             this.repelModifier = 1
             this.repelTimeout = null
