@@ -9,15 +9,40 @@ import { DEFAULTS } from '../config'
 import asteroidData from '../data/full.json'
 import physicsConfig from '../assets/physics.json'
 import { earthCollider } from '../utils/colliders'
+import { timingSafeEqual } from 'crypto'
+
+class EnergyBar {
+    constructor() {
+        this.container = document.createElement('div')
+        this.container.classList.add('healthbar-container')
+        this.bar = document.createElement('div')
+        this.bar.classList.add('healthbar')
+
+        this.container.appendChild(this.bar)
+    }
+
+    mountInto(container) {
+        container.appendChild(this.container)
+    }
+
+    update(percent) {
+        this.bar.style.width = `${ percent }px`
+    }
+}
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
   }
   init () {}
-  preload () {}
+  preload () {
+      this.hudcontainer = document.getElementById('hud')
+  }
 
   create () {
+    this.energy = new EnergyBar()
+    this.energy.mountInto(this.hudcontainer)
+
     this.matter.enableAttractorPlugin()
     
     this.earth = new Earth({
@@ -67,6 +92,8 @@ export default class GameScene extends Phaser.Scene {
     if (this._downKey.isDown) { this.player.move(0, 0.005) }
     if (this._leftKey.isDown) { this.player.move(-0.005, 0) }
     if (this._rightKey.isDown) { this.player.move(0.005, 0) }
+
+    this.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
   }
 
   _toggleTrack() {

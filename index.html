@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Space Game</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         html, body {
             margin: 0;
             padding: 0;
@@ -14,11 +17,37 @@
             width: fit-content;
             height: fit-content;
             margin: 0 auto;
+            position: relative;
+        }
+        #hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .healthbar-container {
+            height: 40px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            background-color: darkgoldenrod;
+        }
+
+        .healthbar {
+            height: 40px;
+            position: absolute;
+            width: 100px;
+            background-color: yellow;
         }
     </style>
 </head>
 <body>
-    <div id=content></div>
+    <div id=content>
+        <div id="hud"></div>
+    </div>
     <script src="/bundle.js"></script>
 </body>
 </html>
