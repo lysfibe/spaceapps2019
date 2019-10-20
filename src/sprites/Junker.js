@@ -20,18 +20,19 @@ export default class JunkerSprite extends MatterSprite {
         this.maxEnergy = 5000
         this.energy = this.maxEnergy
         this.wonga = 0
+        this.turnSpeed = 3
+        this.thrustSpeed = 0.003;
     }
     
     update(t, d) {
         super.update(t, d)
         if (!this.active) return
+    }
 
-        const { velocity } = this.body
-        if (velocity.x !== 0 && velocity.y !== 0) {
-            const angle = Math.atan2(velocity.x, -velocity.y)
-            this.setRotation(angle)
-        } else {
-            this.setRotation(0)
+    turn(degrees){
+        if (!this.active) return
+        if (this.expend(1)) {
+            this.setAngle(this.angle + degrees*this.turnSpeed)
         }
     }
 
@@ -40,6 +41,13 @@ export default class JunkerSprite extends MatterSprite {
         if (this.expend(2)) {
             const force = new Phaser.Math.Vector2(x, y)
             this.applyForce(force)
+        }
+    }
+
+    moveThrust(force){
+        if (!this.active) return
+        if (this.expend(2)) {
+            this.thrust(force*this.thrustSpeed)
         }
     }
 

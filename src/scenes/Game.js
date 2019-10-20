@@ -76,23 +76,23 @@ export default class GameScene extends Phaser.Scene {
 
     this.earth.track()
 
-    this.player = new Junker({ scene: this, x: 0, y: -40, velocity:{x:0,y:-0.5} })
+    this.player = new Junker({ scene: this, x: 0, y: -50, velocity:{x:0.5,y:0.1} })
    
     const keymap = {
         SPACE: {
             down: () => this._toggleTrack(),
         },
         UP: {
-            down: () => this.player.move(0, -0.01),
+            down: () => this.player.moveThrust(1),
         },
         DOWN: {
-            down: () => this.player.move(0, 0.01)
+            down: () => this.player.moveThrust(-1)
         },
         LEFT: {
-            down: () => this.player.move(-0.01, 0)
+            down: () => this.player.turn(-1)
         },
         RIGHT: {
-            down: () => this.player.move(0.01, 0)
+            down: () => this.player.turn(1)
         },
     }
 
@@ -109,10 +109,10 @@ export default class GameScene extends Phaser.Scene {
   }
 
     update(t, d) {
-        if (this._upKey.isDown) { this.player.move(0, -0.005) }
-        if (this._downKey.isDown) { this.player.move(0, 0.005) }
-        if (this._leftKey.isDown) { this.player.move(-0.005, 0) }
-        if (this._rightKey.isDown) { this.player.move(0.005, 0) }
+        if (this._upKey.isDown) { this.player.moveThrust(1) }
+        if (this._downKey.isDown) { this.player.moveThrust(-1) }
+        if (this._leftKey.isDown) { this.player.turn(-1) }
+        if (this._rightKey.isDown) { this.player.turn(1) }
 
         this.player.update(t, d)
 
