@@ -177,8 +177,6 @@ export default class GameScene extends Phaser.Scene {
         this.cashtracker.update(this.player.wonga)
 
         const playertoearth = this.player.mapTo(this.earth)
-        console.log(playertoearth)
-        console.log("The player is %d units away from the Earth, at an angle of %s", playertoearth.distance, playertoearth.angle)
     }
 
     _toggleTrack() {

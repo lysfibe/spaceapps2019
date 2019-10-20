@@ -16,8 +16,5 @@ export function dotProd({ x: x1, y: y1 }, { x: x2, y: y2 }) {
 }
 
 export function angleBetween(vec1, vec2) {
-    console.log(dotProd(vec1, vec2))
-    console.log(ownMagnitude(vec1))
-
     return dotProd(vec1, vec2) / (ownMagnitude(vec1) * ownMagnitude(vec2))
 }
