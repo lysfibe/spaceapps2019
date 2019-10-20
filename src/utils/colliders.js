@@ -4,25 +4,22 @@ export function earthCollider(scene, a, b) {
     let earth = null
     let other = null
 
-    if (goName(a) === 'EarthSprite') {
+    if (a.gameObject.name === 'earth') {
         earth = a
         other = b
-    } else if (goName(b) === 'EarthSprite') {
+    } else if (b.gameObject.name === 'earth') {
         other = a
         earth = b
     }
 
     if (earth == null) {
         return false
-    } else {
-        console.log('ERF')
     }
 
-    if (goName(other) === 'AsteroidSprite') {
-        console.log("Asteroid Collected", other)
+    if (other.gameObject.name.startsWith('asteroid')) {
         other.gameObject.wreck()
         scene.player.kaching(100)
-    } else if (goName(other) === 'JunkerSprite') {
+    } else if (other.gameObject.name === 'junker') {
         alert('OH NO!')
         other.destroy()
     }

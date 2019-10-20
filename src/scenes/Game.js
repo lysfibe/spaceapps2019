@@ -104,7 +104,8 @@ export default class GameScene extends Phaser.Scene {
         earthCollider,
     ]
     this.matter.world.on('collisionstart', (a, b, c) => {
-        colliders.reduce((handled, current) => handled || current(this, b, c), false)
+        colliders.forEach((col) => col(this, b, c))
+        // colliders.reduce((handled, current) => handled || current(this, b, c), false)
     })
   }
 

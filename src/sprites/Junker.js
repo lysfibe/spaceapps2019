@@ -15,6 +15,7 @@ export default class JunkerSprite extends MatterSprite {
             },
             ...props
         })
+        this.name = 'junker'
 
         this.maxEnergy = 5000
         this.energy = this.maxEnergy

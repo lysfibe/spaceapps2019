@@ -2,7 +2,7 @@ import MatterSprite from '../types/MatterSprite'
 import { DEFAULTS } from '../config'
 
 export default class AsteroidSprite extends MatterSprite {
-  constructor (props) {
+  constructor ({ id = Math.round(Math.random() * 100000), ...props }) {
     super({ 
       asset: 'asteroid', 
       mass: DEFAULTS.mass.asteroid, 
@@ -13,5 +13,7 @@ export default class AsteroidSprite extends MatterSprite {
       },
       ...props
     })
+
+    this.name = `asteroid_${ id }`
   }
 }

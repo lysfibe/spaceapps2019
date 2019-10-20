@@ -15,5 +15,6 @@ export default class EarthSprite extends MatterSprite {
         },
         ...props
     })
+    this.name = 'earth'
   }
 }
