@@ -104,7 +104,7 @@ function process(raw) {
   data = data.map(d => {
     d.x = Math.round(scaleX(d.x));
     d.y = Math.round(scaleY(d.y));
-    console.log(`[ ${d.x}, ${d.y} ]`);
+    // console.log(`[ ${d.x}, ${d.y} ]`);
     return d;
   });
 
