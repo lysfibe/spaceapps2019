@@ -72,7 +72,7 @@ export default class JunkerSprite extends MatterSprite {
             clearTimeout(this.repelTimeout)
         }
 
-        this.repelModifier = -4
+        this.repelModifier = -3
         this.repelTimeout = setTimeout(() => {
             this.repelModifier = 1
             this.repelTimeout = null

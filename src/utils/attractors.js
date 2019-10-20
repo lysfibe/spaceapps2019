@@ -13,7 +13,7 @@ export function earthAttractor(earth, other) {
 }
 
 export function junkerAttractor(junker, other) {
-    if (goName(other) === 'EarthSprite' || !junker.gameObject.magnetOn) {
+    if (goName(other) === 'EarthSprite') {
         return 0
     }
 
@@ -25,16 +25,8 @@ export function junkerAttractor(junker, other) {
         return 0
     }
 
-    // Push away
-    else if( distance < junker.shape.radius + 10){
-        return {
-            x: -Math.sign(junker.position.x - other.position.x) * magnetism/distance,
-            y: -Math.sign(junker.position.y - other.position.y) * magnetism/distance,
-        }
-    }
-
     // Pull towards
-    else{
+    else if (junker.gameObject.magnetOn || junker.gameObject.repelModifier < 0){
         return {
             x: Math.sign(junker.position.x - other.position.x) * magnetism * junker.gameObject.repelModifier,
             y: Math.sign(junker.position.y - other.position.y) * magnetism * junker.gameObject.repelModifier,
