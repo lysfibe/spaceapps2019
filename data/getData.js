@@ -13,6 +13,8 @@ const incMax = 2; // Maximum Inclination (orbit angle from equator)
 const minimumCoordinates = 0; // Minimum altitude (pos or neg) in coordinates
 const maximumCoordinates = 300; // Minimum altitude (pos or neg) in coordinates
 
+const minimumSpacing = 5;
+
 console.log(`Requesting TLE data from ${inputURL}`);
 request(inputURL, function(err, res, body) {
   if (!err && res.statusCode == 200) {
@@ -58,15 +60,6 @@ function process(raw) {
 
       return d;
     });
-  // // Remove items that are below the minimum required altitude
-  // .filter(d => {
-  //   return (
-  //     d.x > minimumCoordinates ||
-  //     d.y > minimumCoordinates ||
-  //     d.x < minimumCoordinates * -1 ||
-  //     d.y < minimumCoordinates * -1
-  //   );
-  // });
 
   // data.map(d => {
   //   console.log(`[${d.x}, ${d.y}]`);
@@ -95,19 +88,17 @@ function process(raw) {
   // });
 
   function scaleX(num) {
-    let fit =
-      ((maximumCoordinates - minimumCoordinates) * (num - coordinatesLeastX)) /
-      (coordinatesMostX - coordinatesLeastX);
-    fit += fit < 0 ? -minimumCoordinates : minimumCoordinates;
-    return fit;
+    return (
+      ((maximumCoordinates - 0) * (num - coordinatesLeastX)) /
+      (coordinatesMostX - coordinatesLeastX)
+    );
   }
 
   function scaleY(num) {
-    let fit =
+    return (
       ((maximumCoordinates - minimumCoordinates) * (num - coordinatesLeastY)) /
-      (coordinatesMostY - coordinatesLeastY);
-    fit += fit < 0 ? -minimumCoordinates : minimumCoordinates;
-    return fit;
+      (coordinatesMostY - coordinatesLeastY)
+    );
   }
 
   data = data.map(d => {
@@ -115,6 +106,33 @@ function process(raw) {
     d.y = Math.round(scaleY(d.y));
     console.log(`[ ${d.x}, ${d.y} ]`);
     return d;
+  });
+
+  // Remove items that are below the minimum required altitude
+  data = data.filter(d => {
+    return (
+      d.x > minimumCoordinates ||
+      d.y > minimumCoordinates ||
+      d.x < minimumCoordinates * -1 ||
+      d.y < minimumCoordinates * -1
+    );
+  });
+
+  const usedCoords = [];
+  data = data.filter(d => {
+    // Check if item too close to any existing items
+    if (
+      usedCoords.filter(
+        c =>
+          Math.abs(d.x - c[0]) < minimumSpacing &&
+          Math.abs(d.y - c[1]) < minimumSpacing
+      ).length
+    )
+      return false;
+    else {
+      usedCoords.push([d.x, d.y]);
+      return true;
+    }
   });
 
   console.log(
