@@ -10,8 +10,8 @@ const outputFilePath = "./src/data/full.json";
 const incMin = -2; // Minimum Inclination (orbit angle from equator)
 const incMax = 2; // Maximum Inclination (orbit angle from equator)
 
-const metersToCoordinates = 1 / 100; // Conversion for meters to coordinates
-const minimumCoordinates = 150; // Minimum altitude in coordinates
+const minimumCoordinates = 0; // Minimum altitude (pos or neg) in coordinates
+const maximumCoordinates = 300; // Minimum altitude (pos or neg) in coordinates
 
 console.log(`Requesting TLE data from ${inputURL}`);
 request(inputURL, function(err, res, body) {
@@ -25,7 +25,7 @@ request(inputURL, function(err, res, body) {
 });
 
 function process(raw) {
-  const data = raw
+  let data = raw
     // Only return items within the plane bounded by inclination
     .filter(d => {
       let inc = parseFloat(d["INCLINATION"]);
@@ -48,40 +48,78 @@ function process(raw) {
       const angleRad = angleDeg * (Math.PI / 180);
       const aLen = Math.sin(angleRad) * hLen;
       const oLen = Math.cos(angleRad) * hLen;
-      d.x = toCoordinate(aLen); // Negative => Left, Positive => Right
-      d.y = toCoordinate(oLen) * -1; // Negative => Up, Positive => Down
+      d.x = aLen; // Negative => Left, Positive => Right
+      d.y = oLen * -1; // Negative => Up, Positive => Down
 
       // Calculate component velocity
-      const v = d.satInfo.velocity * 1000;
-      d.dx = toCoordinate(Math.cos(angleRad) * v);
-      d.dy = 0-toCoordinate(Math.sin(angleRad) * v);
+      const v = d.satInfo.velocity;
+      d.dx = Math.cos(angleRad) * v;
+      d.dy = Math.sin(angleRad) * v;
 
       return d;
-    })
-    // Remove items that are below the minimum required altitude
-    .filter(d => {
-      return (
-        d.x > minimumCoordinates ||
-        d.y > minimumCoordinates ||
-        d.x < minimumCoordinates * -1 ||
-        d.y < minimumCoordinates * -1
-      );
     });
+  // // Remove items that are below the minimum required altitude
+  // .filter(d => {
+  //   return (
+  //     d.x > minimumCoordinates ||
+  //     d.y > minimumCoordinates ||
+  //     d.x < minimumCoordinates * -1 ||
+  //     d.y < minimumCoordinates * -1
+  //   );
+  // });
 
   // data.map(d => {
   //   console.log(`[${d.x}, ${d.y}]`);
   // });
 
-  const coordinateAltitudes = data.map(d =>
-    Math.max(Math.abs(d.x), Math.abs(d.y))
-  );
-  const coordinatesLeast = Math.min(...coordinateAltitudes);
-  const coordinatesMost = Math.max(...coordinateAltitudes);
+  const coordinatesX = data.map(d => Math.abs(d.x));
+  const coordinatesLeastX = Math.min(...coordinatesX);
+  const coordinatesMostX = Math.max(...coordinatesX);
 
-  console.log(`
-Found ${data.length} items within inclination range ${incMin}, ${incMax} 
-and mapped to coordinates between ${coordinatesLeast} - ${coordinatesMost} from 0,0
-`);
+  const coordinatesY = data.map(d => Math.abs(d.y));
+  const coordinatesLeastY = Math.min(...coordinatesY);
+  const coordinatesMostY = Math.max(...coordinatesY);
+
+  // const multiplier =
+  //   (maximumCoordinates - minimumCoordinates) /
+  //   (coordinatesMost - coordinatesLeast);
+
+  // console.log(multiplier);
+
+  // data = data.map(d => {
+  //   d.x = Math.round(d.x * multiplier);
+  //   d.y = Math.round(d.y * multiplier);
+  //   console.log(d.x)
+  //   console.log(d.y)
+  //   return d;
+  // });
+
+  function scaleX(num) {
+    let fit =
+      ((maximumCoordinates - minimumCoordinates) * (num - coordinatesLeastX)) /
+      (coordinatesMostX - coordinatesLeastX);
+    fit += fit < 0 ? -minimumCoordinates : minimumCoordinates;
+    return fit;
+  }
+
+  function scaleY(num) {
+    let fit =
+      ((maximumCoordinates - minimumCoordinates) * (num - coordinatesLeastY)) /
+      (coordinatesMostY - coordinatesLeastY);
+    fit += fit < 0 ? -minimumCoordinates : minimumCoordinates;
+    return fit;
+  }
+
+  data = data.map(d => {
+    d.x = Math.round(scaleX(d.x));
+    d.y = Math.round(scaleY(d.y));
+    console.log(`[ ${d.x}, ${d.y} ]`);
+    return d;
+  });
+
+  console.log(
+    `Found ${data.length} items within inclination range ${incMin}, ${incMax}`
+  );
 
   const out = JSON.stringify(data);
 
@@ -89,8 +127,4 @@ and mapped to coordinates between ${coordinatesLeast} - ${coordinatesMost} from 
     if (err) return console.error(err);
     console.log(`Saved results to ${outputFilePath}`);
   });
-}
-
-function toCoordinate(x) {
-  return Math.round(x * metersToCoordinates);
 }

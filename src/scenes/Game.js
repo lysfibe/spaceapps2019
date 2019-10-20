@@ -6,6 +6,8 @@ import Junker from '../sprites/Junker'
 import { bindKeymap } from '../utils/bind'
 import { DEFAULTS } from '../config'
 
+import physicsConfig from '../assets/physics.json'
+
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
@@ -45,9 +47,7 @@ export default class GameScene extends Phaser.Scene {
         },
     }
 
-    this.asteroids = [
-        new Asteroid({ scene: this, x: 0, y: -200, asset: 'asteroid' }).setVelocityX(5)
-    ]
+    this.asteroids = this.importAste
 
     bindKeymap(this, keymap)
   }
@@ -74,5 +74,12 @@ export default class GameScene extends Phaser.Scene {
                 break;
             }
         }
+  }
+
+  importAsteroids({scene}){
+    const data = require('../data/full.json')
+    return data.map(d=>{
+        new Asteroid({scene, x:d.x, y:d.y, velocity:{x:d.dx, y:d.dy}, asset: 'asteroid'})
+    })
   }
 }

@@ -4,13 +4,17 @@ import { DEFAULTS } from '../config'
 
 export default class JunkerSprite extends MatterSprite {
     constructor(props) {
-        const { scaleX, scaleY, ...rest } = props
-
-        super({ asset: 'junker', mass: DEFAULTS.mass.junker, attractor: junkerAttractor, ...rest })
-            .setScale(
-                scaleX ? scaleX : DEFAULTS.scale.junker.x,
-                scaleY ? scaleY : DEFAULTS.scale.junker.y,
-            )
+        super({ 
+            asset: 'junker',
+            mass: DEFAULTS.mass.junker,
+            scale: DEFAULTS.scale.junker,
+            attractor: junkerAttractor,
+            shape: {
+                type: 'circle',
+                radius: 14,
+            },
+            ...props
+        })
     }
 
     move (x, y) {
