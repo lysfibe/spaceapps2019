@@ -1,6 +1,6 @@
 import { goName, mag } from './general'
 
-export function earthCollider(a, b) {
+export function earthCollider(scene, a, b) {
     let earth = null
     let other = null
 
@@ -21,6 +21,7 @@ export function earthCollider(a, b) {
     if (goName(other) === 'AsteroidSprite') {
         console.log("Asteroid Collected", other)
         other.gameObject.wreck()
+        scene.player.kaching(100)
     } else if (goName(other) === 'JunkerSprite') {
         alert('OH NO!')
         other.destroy()

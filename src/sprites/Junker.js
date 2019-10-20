@@ -18,6 +18,7 @@ export default class JunkerSprite extends MatterSprite {
 
         this.maxEnergy = 5000
         this.energy = this.maxEnergy
+        this.wonga = 0
     }
 
     move (x, y) {
@@ -33,6 +34,10 @@ export default class JunkerSprite extends MatterSprite {
         }
         this.energy -= amount
         return true
+    }
+
+    kaching(dolla) {
+        this.wonga += dolla
     }
 
     resetEnergy() {

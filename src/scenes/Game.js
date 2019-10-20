@@ -30,6 +30,26 @@ class EnergyBar {
     }
 }
 
+class CashMoney {
+    constructor() {
+        this.container = document.createElement('div')
+        this.container.classList.add('cashmoney-container')
+        this.cash = document.createElement('span')
+        this.cash.classList.add('cashmoney')
+        this.cash.textContent = '¥0'
+
+        this.container.appendChild(this.cash)
+    }
+
+    mountInto(container) {
+        container.appendChild(this.container)
+    }
+
+    update(value) {
+        this.cash.textContent = `¥${ value }`
+    }
+}
+
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
@@ -42,6 +62,8 @@ export default class GameScene extends Phaser.Scene {
   create () {
     this.energy = new EnergyBar()
     this.energy.mountInto(this.hudcontainer)
+    this.cashtracker = new CashMoney()
+    this.cashtracker.mountInto(this.hudcontainer)
 
     this.matter.enableAttractorPlugin()
     
@@ -82,7 +104,7 @@ export default class GameScene extends Phaser.Scene {
         earthCollider,
     ]
     this.matter.world.on('collisionstart', (a, b, c) => {
-        colliders.reduce((handled, current) => handled || current(b, c), false)
+        colliders.reduce((handled, current) => handled || current(this, b, c), false)
     })
   }
 
@@ -94,6 +116,7 @@ export default class GameScene extends Phaser.Scene {
     if (this._rightKey.isDown) { this.player.move(0.005, 0) }
 
     this.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
+    this.cashtracker.update(this.player.wonga)
   }
 
   _toggleTrack() {
