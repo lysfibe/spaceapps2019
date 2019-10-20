@@ -21,7 +21,9 @@ export default class JunkerSprite extends MatterSprite {
         this.energy = this.maxEnergy
         this.wonga = 0
         this.turnSpeed = 3
-        this.thrustSpeed = 0.003;
+        this.thrustSpeed = 0.003
+        this.magnetStrength = 0.001
+        this.magnetOn = false
     }
     
     update(t, d) {
@@ -48,6 +50,12 @@ export default class JunkerSprite extends MatterSprite {
         if (!this.active) return
         if (this.expend(2)) {
             this.thrust(force*this.thrustSpeed)
+        }
+    }
+
+    magnetise(){
+        if (this.expend(1)) {
+            this.magnetOn = true
         }
     }
 

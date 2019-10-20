@@ -13,12 +13,12 @@ export function earthAttractor(earth, other) {
 }
 
 export function junkerAttractor(junker, other) {
-    if (goName(other) === 'EarthSprite') {
+    if (goName(other) === 'EarthSprite' || !junker.gameObject.magnetOn) {
         return 0
     }
 
     const distance = Math.abs(mag(other.position, junker.position))
-    const magnetism = 0.05/(2 * Math.PI * distance*distance)
+    const magnetism = junker.gameObject.magnetStrength / (2 * Math.PI * distance)
 
     // Out of range
     if (distance > 100) {

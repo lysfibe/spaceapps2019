@@ -152,6 +152,10 @@ export default class GameScene extends Phaser.Scene {
         RIGHT: {
             down: () => this.player.turn(1)
         },
+        SHIFT: {
+            down: () => this.player.magnetise(),
+            up: () => this.player.magnetOn = false
+        }
     }
 
     this.asteroids = this.importAsteroids({scene: this})
@@ -171,6 +175,7 @@ export default class GameScene extends Phaser.Scene {
         if (this._downKey.isDown) { this.player.moveThrust(-1) }
         if (this._leftKey.isDown) { this.player.turn(-1) }
         if (this._rightKey.isDown) { this.player.turn(1) }
+        if (this._shiftKey.isDown) { this.player.magnetise() }
 
         this.player.update(t, d)
 
