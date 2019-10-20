@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import { calculateAttraction } from '../utils/attractors'
-import { mag } from '../utils/general'
+import { mag, angleBetween } from '../utils/general'
 
 export default class MatterSprite extends Phaser.Physics.Matter.Sprite {
     constructor ({ scene, x, y, asset, mass = 1, attractor, scale, shape, velocity }) {
@@ -52,9 +52,11 @@ export default class MatterSprite extends Phaser.Physics.Matter.Sprite {
         }
 
         const distance = mag(this.body.position, other.body.position)
+        const angle = angleBetween(this.body.position, other.body.position) || 0
 
         return {
             distance,
+            angle,
         }
     }
 }

@@ -55,6 +55,41 @@
             vertical-align: middle;
             color: white;
         }
+
+        .leaderboard-container {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+        }
+
+        .leaderboard-container ul li span {
+            color: yellow;
+            font-family: monospace;
+            font-size: 20px;
+        }
+
+        .leaderboard-container ul li {
+            display: flex;
+            width: 150px;
+        }
+
+        .leaderboard-container ul li span:first-child {
+            order: 1;
+        }
+
+        .leaderboard-container ul li span:last-child {
+            order: 3;
+        }
+
+        .leaderboard-container ul li::after {
+            content: '';
+            border-bottom: 1px dotted rgba(255, 255, 0, 0.2);
+            flex-grow: 1;
+            order: 2;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
         body {
             background-image: url('/src/assets/background.png');
         }

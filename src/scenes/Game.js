@@ -50,6 +50,61 @@ class CashMoney {
     }
 }
 
+class Leaderboard {
+    constructor() {
+        const leaderboardFromStore = localStorage.getItem('leaderboard')
+        this.records = leaderboardFromStore
+            ? JSON.parse(leaderboardFromStore)
+            : new Array(10).fill(0)
+
+        this.container = document.createElement('div')
+        this.container.classList.add('leaderboard-container')
+        this.leaderboardList = document.createElement('ul')
+        this.leaderboardListItems = this.records.forEach((score, position) => {
+            const listItem = document.createElement('li')
+            const positionText = document.createElement('span')
+            positionText.textContent = position + 1
+            const scoreText = document.createElement('span')
+            scoreText.textContent = score > 0 ? score : '...'
+            listItem.appendChild(positionText)
+            listItem.appendChild(scoreText)
+            this.leaderboardList.appendChild(listItem)
+        })
+        this.container.appendChild(this.leaderboardList)
+    }
+
+    update() {
+        this.leaderboardList.querySelectorAll('li span:last-child').forEach((record, index) => {
+            record.textContent = this.records[index]
+        })
+    }
+
+    mountInto(container) {
+        container.appendChild(this.container)
+    }
+
+    // returns true if new record, false if not
+    addRecord(value) {
+        let isNewRecord = false
+        for (let i = 0; i < 10; i++) {
+            if (value > this.records[i]) {
+                this.records.splice(i, 0, value)
+                this.records = this.records.slice(0, 9)
+                this.saveToLocalStorage()
+                this.update()
+                isNewRecord = true
+                break;
+            }
+        }
+ 
+        return isNewRecord
+    }
+
+    saveToLocalStorage() {
+        localStorage.setItem('leaderboard', JSON.stringify(this.records))
+    }
+}
+
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
@@ -64,6 +119,8 @@ export default class GameScene extends Phaser.Scene {
     this.energy.mountInto(this.hudcontainer)
     this.cashtracker = new CashMoney()
     this.cashtracker.mountInto(this.hudcontainer)
+    this.leaderboard = new Leaderboard()
+    this.leaderboard.mountInto(this.hudcontainer)
 
     this.matter.enableAttractorPlugin()
     
@@ -119,7 +176,7 @@ export default class GameScene extends Phaser.Scene {
         this.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
         this.cashtracker.update(this.player.wonga)
 
-        console.log("The player is %d units away from the Earth", this.player.mapTo(this.earth).distance)
+        const playertoearth = this.player.mapTo(this.earth)
     }
 
     _toggleTrack() {
@@ -139,6 +196,18 @@ export default class GameScene extends Phaser.Scene {
     }
 
     importAsteroids({ scene }) {
-        return asteroidData.map(d => new Asteroid({ scene, x: d.x, y: d.y, velocity: { x: d.dx/2, y: d.dy/2 } }))
+        return asteroidData.map(d => new Asteroid({
+            asset: this.getJunkType(),
+            scene,
+            x: d.x,
+            y: d.y,
+            velocity: { x: d.dx/2, y: d.dy/2 }
+        }))
+    }
+
+    getJunkType(){
+        let junkTypes = ['asteroid-screw', 'asteroid-can', 'asteroid-satellite'];
+        let randomNumber = Math.floor(Math.random()*junkTypes.length);
+        return junkTypes[randomNumber];
     }
 }
