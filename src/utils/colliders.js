@@ -25,3 +25,35 @@ export function earthCollider(scene, a, b) {
 
     return true
 }
+
+const isShip = a => a.gameObject.name === 'junker'
+const isAsteroid = a => a.gameObject.name.startsWith('asteroid_')
+const isEarth = a => a.gameObject.name === 'earth'
+
+export function asteroidShipCollider(scene, a, b) {
+    let player = null
+    let asteroid = null
+
+    if (isShip(a)) {
+        player = a
+        if (isAsteroid(b)) {
+            asteroid = b
+        }
+    } else if (isShip(b)) {
+        player = b
+        if (isAsteroid(a)) {
+            asteroid = a
+        }
+    }
+
+    if (player == null || asteroid == null) {
+        return false
+    }
+
+    if (player.gameObject.repelObjects(100)) {
+        return true
+    } else {
+        scene.onLose()
+        return true
+    }
+}
