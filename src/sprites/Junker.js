@@ -12,4 +12,9 @@ export default class JunkerSprite extends MatterSprite {
                 scaleY ? scaleY : DEFAULTS.scale.junker.y,
             )
     }
+
+    move (x, y) {
+        const force = new Phaser.Math.Vector2(x, y)
+        this.applyForce(force)
+    }
 }
