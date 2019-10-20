@@ -5,10 +5,10 @@ import { goName, mag } from './general'
 
 export function earthAttractor(earth, other) {
     const distance = Math.abs(mag(other.position, earth.position))
-    const d2 = distance^2
+    const gravity = 0.0015/(2 * Math.PI * distance)
     return  {
-        x: Math.sign(earth.position.x - other.position.x) * 0.001/d2,
-        y: Math.sign(earth.position.y - other.position.y) * 0.001/d2,
+        x: Math.sign(earth.position.x - other.position.x) * gravity,
+        y: Math.sign(earth.position.y - other.position.y) * gravity,
     }
 }
 
@@ -18,27 +18,26 @@ export function junkerAttractor(junker, other) {
     }
 
     const distance = Math.abs(mag(other.position, junker.position))
-    const d2 = distance^2
+    const magnetism = 0.05/(2 * Math.PI * distance*distance)
 
     // Out of range
     if (distance > 100) {
         return 0
     }
 
-
     // Push away
     else if( distance < junker.shape.radius + 10){
         return {
-            x: -Math.sign(junker.position.x - other.position.x) * 0.000001,
-            y: -Math.sign(junker.position.y - other.position.y) * 0.000001,
+            x: -Math.sign(junker.position.x - other.position.x) * magnetism/distance,
+            y: -Math.sign(junker.position.y - other.position.y) * magnetism/distance,
         }
     }
 
     // Pull towards
     else{
         return {
-            x: Math.sign(junker.position.x - other.position.x) * 0.0005/d2,
-            y: Math.sign(junker.position.y - other.position.y) * 0.0005/d2,
+            x: Math.sign(junker.position.x - other.position.x) * magnetism,
+            y: Math.sign(junker.position.y - other.position.y) * magnetism,
         }
     }
 }

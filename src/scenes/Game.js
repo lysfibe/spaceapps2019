@@ -139,6 +139,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
     importAsteroids({ scene }) {
-        return asteroidData.map(d => new Asteroid({ scene, x: d.x, y: d.y, velocity: { x: d.dx, y: d.dy } }))
+        return asteroidData.map(d => new Asteroid({ scene, x: d.x, y: d.y, velocity: { x: d.dx/2, y: d.dy/2 } }))
     }
 }
