@@ -10,100 +10,64 @@ import asteroidData from '../data/full.json'
 import physicsConfig from '../assets/physics.json'
 import { earthCollider } from '../utils/colliders'
 import { timingSafeEqual } from 'crypto'
+import CashTracker from '../ui/CashTracker'
+import EnergyBar from '../ui/EnergyBar'
+import Leaderboard from '../ui/Leaderboard'
 
-class EnergyBar {
-    constructor() {
-        this.container = document.createElement('div')
-        this.container.classList.add('healthbar-container')
-        this.bar = document.createElement('div')
-        this.bar.classList.add('healthbar')
+// class Leaderboard {
+//     constructor() {
+//         const leaderboardFromStore = localStorage.getItem('leaderboard')
+//         this.records = leaderboardFromStore
+//             ? JSON.parse(leaderboardFromStore)
+//             : new Array(10).fill(0)
 
-        this.container.appendChild(this.bar)
-    }
+//         this.container = document.createElement('div')
+//         this.container.classList.add('leaderboard-container')
+//         this.leaderboardList = document.createElement('ul')
+//         this.leaderboardListItems = this.records.forEach((score, position) => {
+//             const listItem = document.createElement('li')
+//             const positionText = document.createElement('span')
+//             positionText.textContent = position + 1
+//             const scoreText = document.createElement('span')
+//             scoreText.textContent = score > 0 ? score : '...'
+//             listItem.appendChild(positionText)
+//             listItem.appendChild(scoreText)
+//             this.leaderboardList.appendChild(listItem)
+//         })
+//         this.container.appendChild(this.leaderboardList)
+//     }
 
-    mountInto(container) {
-        container.appendChild(this.container)
-    }
+//     update() {
+//         this.leaderboardList.querySelectorAll('li span:last-child').forEach((record, index) => {
+//             record.textContent = this.records[index]
+//         })
+//     }
 
-    update(percent) {
-        this.bar.style.width = `${ percent }px`
-    }
-}
+//     mountInto(container) {
+//         container.appendChild(this.container)
+//     }
 
-class CashMoney {
-    constructor() {
-        this.container = document.createElement('div')
-        this.container.classList.add('cashmoney-container')
-        this.cash = document.createElement('span')
-        this.cash.classList.add('cashmoney')
-        this.cash.textContent = '¥0'
-
-        this.container.appendChild(this.cash)
-    }
-
-    mountInto(container) {
-        container.appendChild(this.container)
-    }
-
-    update(value) {
-        this.cash.textContent = `¥${ value }`
-    }
-}
-
-class Leaderboard {
-    constructor() {
-        const leaderboardFromStore = localStorage.getItem('leaderboard')
-        this.records = leaderboardFromStore
-            ? JSON.parse(leaderboardFromStore)
-            : new Array(10).fill(0)
-
-        this.container = document.createElement('div')
-        this.container.classList.add('leaderboard-container')
-        this.leaderboardList = document.createElement('ul')
-        this.leaderboardListItems = this.records.forEach((score, position) => {
-            const listItem = document.createElement('li')
-            const positionText = document.createElement('span')
-            positionText.textContent = position + 1
-            const scoreText = document.createElement('span')
-            scoreText.textContent = score > 0 ? score : '...'
-            listItem.appendChild(positionText)
-            listItem.appendChild(scoreText)
-            this.leaderboardList.appendChild(listItem)
-        })
-        this.container.appendChild(this.leaderboardList)
-    }
-
-    update() {
-        this.leaderboardList.querySelectorAll('li span:last-child').forEach((record, index) => {
-            record.textContent = this.records[index]
-        })
-    }
-
-    mountInto(container) {
-        container.appendChild(this.container)
-    }
-
-    // returns true if new record, false if not
-    addRecord(value) {
-        let isNewRecord = false
-        for (let i = 0; i < 10; i++) {
-            if (value > this.records[i]) {
-                this.records.splice(i, 0, value)
-                this.records = this.records.slice(0, 9)
-                this.saveToLocalStorage()
-                this.update()
-                isNewRecord = true
-                break;
-            }
-        }
+//     // returns true if new record, false if not
+//     addRecord(value) {
+//         let isNewRecord = false
+//         for (let i = 0; i < 10; i++) {
+//             if (value > this.records[i]) {
+//                 this.records.splice(i, 0, value)
+//                 this.records = this.records.slice(0, 9)
+//                 this.saveToLocalStorage()
+//                 this.update()
+//                 isNewRecord = true
+//                 break;
+//             }
+//         }
  
-        return isNewRecord
-    }
+//         return isNewRecord
+//     }
 
-    saveToLocalStorage() {
-        localStorage.setItem('leaderboard', JSON.stringify(this.records))
-    }
-}
+//     saveToLocalStorage() {
+//         localStorage.setItem('leaderboard', JSON.stringify(this.records))
+//     }
+// }
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
@@ -115,12 +79,20 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create () {
-    this.energy = new EnergyBar()
-    this.energy.mountInto(this.hudcontainer)
-    this.cashtracker = new CashMoney()
-    this.cashtracker.mountInto(this.hudcontainer)
-    this.leaderboard = new Leaderboard()
-    this.leaderboard.mountInto(this.hudcontainer)
+    // this.energy = new EnergyBar()
+    // this.energy.mountInto(this.hudcontainer)
+    // this.cashtracker = new CashMoney()
+    // this.cashtracker.mountInto(this.hudcontainer)
+    // this.leaderboard = new Leaderboard()
+    // this.leaderboard.mountInto(this.hudcontainer)
+
+    this.ui = {
+        energy: new EnergyBar(),
+        cash: new CashTracker(),
+        leaderboard: new Leaderboard(),
+    }
+
+    Object.values(this.ui).forEach(c => c.mount(this.hudcontainer))
 
     this.matter.enableAttractorPlugin()
     
@@ -177,8 +149,8 @@ export default class GameScene extends Phaser.Scene {
 
         this.player.update(t, d)
 
-        this.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
-        this.cashtracker.update(this.player.wonga)
+        this.ui.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
+        this.ui.cash.update(this.player.wonga)
     }
 
     _toggleTrack() {
@@ -200,7 +172,7 @@ export default class GameScene extends Phaser.Scene {
     onLose() {
         this.earth.track()
         this.player.wreck()
-        this.leaderboard.addRecord(this.player.wonga)
+        this.ui.leaderboard.add(this.player.wonga)
     }
 
     importAsteroids({ scene }) {
