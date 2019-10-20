@@ -118,6 +118,8 @@ export default class GameScene extends Phaser.Scene {
 
         this.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
         this.cashtracker.update(this.player.wonga)
+
+        console.log("The player is %d units away from the Earth", this.player.mapTo(this.earth).distance)
     }
 
     _toggleTrack() {

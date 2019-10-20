@@ -26,7 +26,6 @@ export default class JunkerSprite extends MatterSprite {
         super.update(t, d)
         if (!this.active) return
 
-        console.log(this)
         const { velocity } = this.body
         if (velocity.x !== 0 && velocity.y !== 0) {
             const angle = Math.atan2(velocity.x, -velocity.y)
