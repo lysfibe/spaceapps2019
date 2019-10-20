@@ -14,10 +14,13 @@ The player pilots a Magnetic spacecraft (Magship) powered by a small nuclear rea
 
 ### Controls 
 
-SHIFT - Magentize
-Up arrow - Thrust forwards relative to ships direction
-Down arrow - Reverse
-Space - Switch view focus between Earth and Magship
+| Key   | Action                                               |
+|-------|------------------------------------------------------|
+| Shift | Magentize spaceship                                  |
+| ⬆️    | Thrust forwards relative to ships direction          |
+| ⬅️➡️  | Rotate spaceship                                     | 
+| ⬇️    | Reverse                                              |
+| Space | Switch view focus between Earth and spaceship        |
 
 ## How to Run
 
