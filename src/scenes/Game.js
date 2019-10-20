@@ -113,9 +113,11 @@ export default class GameScene extends Phaser.Scene {
     }
 
     onLose() {
+        Object.values(this.ui).forEach(ui => ui.unmount())
         this.earth.track()
         this.player.wreck()
         this.ui.leaderboard.add(this.player.wonga)
+        this.scene.start('EndScene')
     }
 
     importAsteroids({ scene }) {

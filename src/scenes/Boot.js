@@ -12,11 +12,14 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('asteroid-can', 'src/assets/coke-can.png');
         this.load.image('asteroid-satellite', 'src/assets/asteriod-sattelite.png');
         this.load.image('junker', 'src/assets/junk-collector.png');
+
+        this.load.image('scene-start', 'src/assets/starting.png');
+        this.load.image('scene-end', 'src/assets/ending.png');
     }
 
     update () {
         // if (false) { // Change scene condition, post-load
-            this.scene.start('GameScene')
+            this.scene.start('StartScene')
         // }
     }
 }
