@@ -54,7 +54,7 @@ function process(raw) {
       // Calculate component velocity
       const v = d.satInfo.velocity;
       d.dx = Math.cos(angleRad) * v;
-      d.dy = 0 - Math.sin(angleRad) * v;
+      d.dy = Math.sin(angleRad) * v;
 
       return d;
     });

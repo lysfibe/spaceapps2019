@@ -79,7 +79,7 @@ export default class GameScene extends Phaser.Scene {
   importAsteroids({scene}){
     const data = require('../data/full.json')
     return data.map(d=>{
-        new Asteroid({scene, x:d.x, y:d.y, velocityX:d.dx, velocityY:d.dy, asset: 'asteroid'})
+        new Asteroid({scene, x:d.x, y:d.y, velocity:{x:d.dx, y:d.dy}, asset: 'asteroid'})
     })
   }
 }
