@@ -10,7 +10,7 @@ const outputFilePath = "./src/data/full.json";
 const incMin = -2; // Minimum Inclination (orbit angle from equator)
 const incMax = 2; // Maximum Inclination (orbit angle from equator)
 
-const minimumCoordinates = 0; // Minimum altitude (pos or neg) in coordinates
+const minimumCoordinates = 100; // Minimum altitude (pos or neg) in coordinates
 const maximumCoordinates = 300; // Minimum altitude (pos or neg) in coordinates
 
 const minimumSpacing = 5;
@@ -65,46 +65,24 @@ function process(raw) {
   //   console.log(`[${d.x}, ${d.y}]`);
   // });
 
-  const coordinatesX = data.map(d => Math.abs(d.x));
-  const coordinatesLeastX = Math.min(...coordinatesX);
-  const coordinatesMostX = Math.max(...coordinatesX);
+  const coordinates = []
+    .concat(data.map(d => Math.abs(d["APOGEE"])))
+    .concat(data.map(d => Math.abs(d["PERIGEE"])));
+  const coordinatesLeast = Math.min(...coordinates);
+  const coordinatesMost = Math.max(...coordinates);
 
-  const coordinatesY = data.map(d => Math.abs(d.y));
-  const coordinatesLeastY = Math.min(...coordinatesY);
-  const coordinatesMostY = Math.max(...coordinatesY);
-
-  // const multiplier =
-  //   (maximumCoordinates - minimumCoordinates) /
-  //   (coordinatesMost - coordinatesLeast);
-
-  // console.log(multiplier);
-
-  // data = data.map(d => {
-  //   d.x = Math.round(d.x * multiplier);
-  //   d.y = Math.round(d.y * multiplier);
-  //   console.log(d.x)
-  //   console.log(d.y)
-  //   return d;
-  // });
-
-  function scaleX(num) {
-    return (
-      ((maximumCoordinates - 0) * (num - coordinatesLeastX)) /
-      (coordinatesMostX - coordinatesLeastX)
-    );
-  }
-
-  function scaleY(num) {
-    return (
-      ((maximumCoordinates - minimumCoordinates) * (num - coordinatesLeastY)) /
-      (coordinatesMostY - coordinatesLeastY)
+  function toCoordinateUnits(num) {
+    return Math.round(
+      (maximumCoordinates * (num - coordinatesLeast)) /
+        (coordinatesMost - coordinatesLeast)
     );
   }
 
   data = data.map(d => {
-    d.x = Math.round(scaleX(d.x));
-    d.y = Math.round(scaleY(d.y));
-    // console.log(`[ ${d.x}, ${d.y} ]`);
+    d.x = Math.round(toCoordinateUnits(d.x));
+    d.y = Math.round(toCoordinateUnits(d.y));
+    d.maxAlt = Math.round(toCoordinateUnits(d["APOGEE"]));
+    d.minAlt = Math.round(toCoordinateUnits(d["PERIGEE"]));
     return d;
   });
 
@@ -133,6 +111,10 @@ function process(raw) {
       usedCoords.push([d.x, d.y]);
       return true;
     }
+  });
+
+  data.map(d => {
+    console.log(`[${d.x}, ${d.y}]`);
   });
 
   console.log(
