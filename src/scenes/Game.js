@@ -141,6 +141,18 @@ export default class GameScene extends Phaser.Scene {
     }
 
     importAsteroids({ scene }) {
-        return asteroidData.map(d => new Asteroid({ scene, x: d.x, y: d.y, velocity: { x: d.dx/2, y: d.dy/2 } }))
+        return asteroidData.map(d => new Asteroid({
+            asset: this.getJunkType(),
+            scene,
+            x: d.x,
+            y: d.y,
+            velocity: { x: d.dx/2, y: d.dy/2 }
+        }))
+    }
+
+    getJunkType(){
+        let junkTypes = ['asteroid-screw', 'asteroid-can', 'asteroid-satellite'];
+        let randomNumber = Math.floor(Math.random()*junkTypes.length);
+        return junkTypes[randomNumber];
     }
 }
