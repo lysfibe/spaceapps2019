@@ -197,6 +197,12 @@ export default class GameScene extends Phaser.Scene {
         }
     }
 
+    onLose() {
+        this.earth.track()
+        this.player.wreck()
+        this.leaderboard.addRecord(this.player.wonga)
+    }
+
     importAsteroids({ scene }) {
         return asteroidData.map(d => new Asteroid({
             asset: this.getJunkType(),
