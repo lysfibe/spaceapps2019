@@ -110,11 +110,13 @@ export default class GameScene extends Phaser.Scene {
   }
 
 
-  update() {
+  update(t, d) {
     if (this._upKey.isDown) { this.player.move(0, -0.005) }
     if (this._downKey.isDown) { this.player.move(0, 0.005) }
     if (this._leftKey.isDown) { this.player.move(-0.005, 0) }
     if (this._rightKey.isDown) { this.player.move(0.005, 0) }
+
+    this.player.update(t, d)
 
     this.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
     this.cashtracker.update(this.player.wonga)

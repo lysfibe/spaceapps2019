@@ -21,6 +21,17 @@ export default class JunkerSprite extends MatterSprite {
         this.energy = this.maxEnergy
         this.wonga = 0
     }
+    
+    update(t, d) {
+        super.update(t, d)
+        const { velocity } = this.body
+        if (velocity.x !== 0 && velocity.y !== 0) {
+            const angle = Math.atan2(velocity.x, -velocity.y)
+            this.setRotation(angle)
+        } else {
+            this.setRotation(0)
+        }
+    }
 
     move (x, y) {
         if (this.expend(2)) {
