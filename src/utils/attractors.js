@@ -25,11 +25,30 @@ export function junkerAttractor(junker, other) {
         return 0
     }
 
+    // Emergency push
+    if (junker.gameObject.repelModifier < 0){
+        if(junker.gameObject.expend(1)){
+            return {
+                x: Math.sign(junker.position.x - other.position.x) * magnetism * junker.gameObject.repelModifier,
+                y: Math.sign(junker.position.y - other.position.y) * magnetism * junker.gameObject.repelModifier,
+            }
+        }
+        return 0
+    }
+
     // Pull towards
-    else if (junker.gameObject.magnetOn || junker.gameObject.repelModifier < 0){
+    if (junker.gameObject.magnetOn && distance > 50){
         return {
-            x: Math.sign(junker.position.x - other.position.x) * magnetism * junker.gameObject.repelModifier,
-            y: Math.sign(junker.position.y - other.position.y) * magnetism * junker.gameObject.repelModifier,
+            x: Math.sign(junker.position.x - other.position.x) * magnetism,
+            y: Math.sign(junker.position.y - other.position.y) * magnetism,
+        }
+    }
+
+    // Hold at a distance
+    if (junker.gameObject.magnetOn && distance < 30){
+        return {
+            x: Math.sign(junker.position.x - other.position.x) * magnetism * -1,
+            y: Math.sign(junker.position.y - other.position.y) * magnetism * -1,
         }
     }
 }
