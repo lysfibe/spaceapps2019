@@ -13,5 +13,6 @@ export default class EnergyBar extends UI {
 
     update(value) {
         this.bar.style.width = `${ value }px`
+        if (value < 25) this.bar.style.backgroundColor = 'red';
     }
 }
