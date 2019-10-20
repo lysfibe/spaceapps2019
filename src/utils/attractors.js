@@ -1,14 +1,7 @@
 // import EarthSprite from '../sprites/Earth'
 // import JunkerSprite from '../sprites/Junker'
 
-function goName(a) { return a.gameObject.constructor.name }
-
-function mag(posA, posB) {
-    const x = posB.x - posA.x
-    const y = posB.y - posA.y
-
-    return Math.sqrt((x*x) + (y*y))
-}
+import { goName, mag } from './general'
 
 export function earthAttractor(earth, other) {
     const distance = Math.abs(mag(other.position, earth.position))
@@ -20,7 +13,6 @@ export function earthAttractor(earth, other) {
 }
 
 export function junkerAttractor(junker, other) {
-    console.log(junker, other)
     if (goName(other) === 'EarthSprite') {
         return 0
     }

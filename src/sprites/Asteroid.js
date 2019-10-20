@@ -1,7 +1,7 @@
 import MatterSprite from '../types/MatterSprite'
 import { DEFAULTS } from '../config'
 
-export default class AsteriodSprite extends MatterSprite {
+export default class AsteroidSprite extends MatterSprite {
   constructor (props) {
     super({ 
       asset: 'asteroid', 
@@ -9,7 +9,7 @@ export default class AsteriodSprite extends MatterSprite {
       scale: DEFAULTS.scale.asteroid,
       shape: {
         type: 'circle',
-        radius: 75,
+        radius: 50,
       },
       ...props
     })

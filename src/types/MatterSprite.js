@@ -38,4 +38,9 @@ export default class MatterSprite extends Phaser.Physics.Matter.Sprite {
         camera.setLerp(0.1, 0.1)
         camera.startFollow(this)
     }
+
+    wreck() {
+        this.destroy()
+        this.visible = false
+    }
 }

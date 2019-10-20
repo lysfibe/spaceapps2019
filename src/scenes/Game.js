@@ -6,7 +6,9 @@ import Junker from '../sprites/Junker'
 import { bindKeymap } from '../utils/bind'
 import { DEFAULTS } from '../config'
 
+import asteroidData from '../data/full.json'
 import physicsConfig from '../assets/physics.json'
+import { earthCollider } from '../utils/colliders'
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
@@ -47,9 +49,20 @@ export default class GameScene extends Phaser.Scene {
         },
     }
 
+<<<<<<< HEAD
     this.asteroids = this.importAste
+=======
+    this.asteroids = this.importAsteroids({scene:this})
+>>>>>>> Implement collisions for the earth
 
     bindKeymap(this, keymap)
+
+    const colliders = [
+        earthCollider,
+    ]
+    this.matter.world.on('collisionstart', (a, b, c) => {
+        colliders.reduce((handled, current) => handled || current(b, c), false)
+    })
   }
 
 
@@ -76,10 +89,16 @@ export default class GameScene extends Phaser.Scene {
         }
   }
 
+<<<<<<< HEAD
   importAsteroids({scene}){
     const data = require('../data/full.json')
     return data.map(d=>{
         new Asteroid({scene, x:d.x, y:d.y, velocity:{x:d.dx, y:d.dy}, asset: 'asteroid'})
     })
   }
+=======
+    importAsteroids({ scene }) {
+        return asteroidData.map(d => new Asteroid({ scene, x: d.x, y: d.y, velocity: { x: d.dx, y: d.dy } }))
+    }
+>>>>>>> Implement collisions for the earth
 }
