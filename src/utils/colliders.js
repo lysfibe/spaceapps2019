@@ -51,6 +51,14 @@ export function asteroidShipCollider(scene, a, b) {
     }
 
     if (player.gameObject.repelObjects(600)) {
+        scene.tweens.add({
+            targets: player.gameObject,
+            loop: 11,
+            alpha: { from: 0, to: 1 },
+            duration: 75,
+            onComplete: () => player.gameObject.alpha = 1
+        })
+
         return true
     } else {
         scene.onLose()
