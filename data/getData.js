@@ -13,7 +13,7 @@ const incMax = 2; // Maximum Inclination (orbit angle from equator)
 const minimumCoordinates = 100; // Minimum altitude (pos or neg) in coordinates
 const maximumCoordinates = 300; // Minimum altitude (pos or neg) in coordinates
 
-const minimumSpacing = 5;
+const minimumSpacing = 1;
 
 console.log(`Requesting TLE data from ${inputURL}`);
 request(inputURL, function(err, res, body) {
