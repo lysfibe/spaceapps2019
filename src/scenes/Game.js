@@ -47,7 +47,7 @@ export default class GameScene extends Phaser.Scene {
         },
     }
 
-    this.asteroids = this.importAste
+    this.asteroids = this.importAsteroids({scene: this})
 
     bindKeymap(this, keymap)
   }
