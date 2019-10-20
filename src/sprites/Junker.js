@@ -21,16 +21,13 @@ export default class JunkerSprite extends MatterSprite {
         this.energy = this.maxEnergy
         this.wonga = 0
         this.turnSpeed = 3
-<<<<<<< HEAD
         this.thrustSpeed = 0.003
+
         this.magnetStrength = 0.001
         this.magnetOn = false
-=======
-        this.thrustSpeed = 0.003;
         
         this.repelModifier = 1
         this.repelTimeout = null
->>>>>>> Trigger push on asteroid collision
     }
     
     update(t, d) {
