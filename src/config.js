@@ -26,16 +26,16 @@ export const DEFAULTS = {
   },
   scale: {
     asteroid: {
-      x: 0.05,
-      y: 0.05
+      x: 0.03,
+      y: 0.03
     },
     junker: {
       x: 0.7,
       y: 0.7
     },
     earth: {
-      x: 0.5,
-      y: 0.5
+      x: 0.3,
+      y: 0.3
     }
   }
 }

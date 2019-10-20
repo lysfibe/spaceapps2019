@@ -16,4 +16,9 @@ export default class JunkerSprite extends MatterSprite {
             ...props
         })
     }
+
+    move (x, y) {
+        const force = new Phaser.Math.Vector2(x, y)
+        this.applyForce(force)
+    }
 }

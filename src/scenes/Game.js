@@ -17,7 +17,7 @@ export default class GameScene extends Phaser.Scene {
 
   create () {
     this.matter.enableAttractorPlugin()
-
+    
     this.earth = new Earth({
       scene: this,
       x: 0,
@@ -27,37 +27,37 @@ export default class GameScene extends Phaser.Scene {
 
     this.earth.track()
 
+    this.player = new Junker({ scene: this, x: 0, y: 200 })
+   
     const keymap = {
         SPACE: {
             down: () => this._toggleTrack(),
         },
         UP: {
-            down: () => movePlayer(0, -0.01)
+            down: () => this.player.move(0, -0.01),
         },
         DOWN: {
-            down: () => movePlayer(0, 0.01)
+            down: () => this.player.move(0, 0.01)
         },
         LEFT: {
-            down: () => movePlayer(-0.01, 0)
+            down: () => this.player.move(-0.01, 0)
         },
         RIGHT: {
-            down: () => movePlayer(0.01, 0)
+            down: () => this.player.move(0.01, 0)
         },
     }
-    
-    this.player = new Junker({ scene: this, x: 0, y: 200 })
 
-    const movePlayer = (x, y) => {
-        const force = new Phaser.Math.Vector2(x, y)
-        this.player.applyForce(force)
-    }
-
-    // this.asteroids = [
-    //     new Asteroid({ scene: this, x: 0, y: -100, asset: 'asteroid' }).setVelocityX(10)
-    // ]
-    this.asteroids = this.importAsteroids({scene:this})
+    this.asteroids = this.importAste
 
     bindKeymap(this, keymap)
+  }
+
+
+  update() {
+    if (this._upKey.isDown) { this.player.move(0, -0.005) }
+    if (this._downKey.isDown) { this.player.move(0, 0.005) }
+    if (this._leftKey.isDown) { this.player.move(-0.005, 0) }
+    if (this._rightKey.isDown) { this.player.move(0.005, 0) }
   }
 
   _toggleTrack() {
