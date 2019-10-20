@@ -5,7 +5,9 @@ import { goName, mag } from './general'
 
 export function earthAttractor(earth, other) {
     const distance = Math.abs(mag(other.position, earth.position))
-    const gravity = 0.0015/(2 * Math.PI * distance)
+    const d = distance
+    const gravity = 0.02/(d*Math.PI*2)
+    // console.log(gravity)
     return  {
         x: Math.sign(earth.position.x - other.position.x) * gravity,
         y: Math.sign(earth.position.y - other.position.y) * gravity,
@@ -18,18 +20,27 @@ export function junkerAttractor(junker, other) {
     }
 
     const distance = Math.abs(mag(other.position, junker.position))
-    const magnetism = junker.gameObject.magnetStrength / (2 * Math.PI * distance)
+    const d = distance
+    const magnetism = junker.gameObject.magnetStrength / (Math.PI * d)
 
     // Out of range
     if (distance > 100) {
         return 0
     }
 
-    // Pull towards
-    else if (junker.gameObject.magnetOn || junker.gameObject.repelModifier < 0){
+    if (junker.gameObject.repelModifier < 0 && distance < 30){
+        other.velocity=({x:0,y:0})
         return {
-            x: Math.sign(junker.position.x - other.position.x) * magnetism * junker.gameObject.repelModifier,
-            y: Math.sign(junker.position.y - other.position.y) * magnetism * junker.gameObject.repelModifier,
+            x: Math.sign(junker.position.x - other.position.x) * -0.0001,
+            y: Math.sign(junker.position.y - other.position.y) * -0.0001,
+        }
+    }
+
+    // Pull towards
+    if (junker.gameObject.magnetOn){
+        return {
+            x: Math.sign(junker.position.x - other.position.x) * magnetism,
+            y: Math.sign(junker.position.y - other.position.y) * magnetism,
         }
     }
 }

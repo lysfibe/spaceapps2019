@@ -42,7 +42,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.earth.track()
 
-    this.player = new Junker({ scene: this, x: 0, y: -50, z: 1, velocity:{x:0.5,y:0.1} })
+    this.player = new Junker({ scene: this, x: 0, y: -50, z: 1, velocity:{x:1,y:0.2} })
    
     const keymap = {
         SPACE: {
@@ -127,7 +127,7 @@ export default class GameScene extends Phaser.Scene {
             x: d.x,
             y: d.y,
             z: 0,
-            velocity: { x: d.dx/2, y: d.dy/2 }
+            velocity: { x: d.dx*0.5, y: d.dy*0.5 }
         }))
     }
 

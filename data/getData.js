@@ -10,8 +10,8 @@ const outputFilePath = "./src/data/full.json";
 const incMin = -2; // Minimum Inclination (orbit angle from equator)
 const incMax = 2; // Maximum Inclination (orbit angle from equator)
 
-const minimumCoordinates = 100; // Minimum altitude (pos or neg) in coordinates
-const maximumCoordinates = 300; // Minimum altitude (pos or neg) in coordinates
+const minimumCoordinates = 150; // Minimum altitude (pos or neg) in coordinates
+const maximumCoordinates = 400; // Minimum altitude (pos or neg) in coordinates
 
 const minimumSpacing = 1;
 
@@ -72,17 +72,17 @@ function process(raw) {
   const coordinatesMost = Math.max(...coordinates);
 
   function toCoordinateUnits(num) {
-    return Math.round(
+    return (
       (maximumCoordinates * (num - coordinatesLeast)) /
-        (coordinatesMost - coordinatesLeast)
+      (coordinatesMost - coordinatesLeast)
     );
   }
 
   data = data.map(d => {
-    d.x = Math.round(toCoordinateUnits(d.x));
-    d.y = Math.round(toCoordinateUnits(d.y));
-    d.maxAlt = Math.round(toCoordinateUnits(d["APOGEE"]));
-    d.minAlt = Math.round(toCoordinateUnits(d["PERIGEE"]));
+    d.x = toCoordinateUnits(d.x);
+    d.y = toCoordinateUnits(d.y);
+    d.maxAlt = toCoordinateUnits(d["APOGEE"]);
+    d.minAlt = toCoordinateUnits(d["PERIGEE"]);
     return d;
   });
 

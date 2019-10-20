@@ -9,7 +9,7 @@ export default class AsteroidSprite extends MatterSprite {
       scale: DEFAULTS.scale.asteroid,
       shape: {
         type: 'circle',
-        radius: 4,
+        radius: 3,
       },
       ...props
     })
