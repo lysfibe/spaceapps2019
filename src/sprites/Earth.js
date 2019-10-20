@@ -11,7 +11,7 @@ export default class EarthSprite extends MatterSprite {
         attractor: earthAttractor,
         shape: {
             type: 'circle',
-            radius: 110,
+            radius: 95,
         },
         ...props
     })
