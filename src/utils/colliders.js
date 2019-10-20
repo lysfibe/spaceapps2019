@@ -21,7 +21,7 @@ export function earthCollider(scene, a, b) {
         scene.player.kaching(100)
     } else if (other.gameObject.name === 'junker') {
         alert('OH NO!')
-        other.destroy()
+        other.gameObject.wreck()
     }
 
     return true
