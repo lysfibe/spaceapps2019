@@ -103,26 +103,24 @@ export default class GameScene extends Phaser.Scene {
     const colliders = [
         earthCollider,
     ]
-    this.matter.world.on('collisionstart', (a, b, c) => {
-        colliders.forEach((col) => col(this, b, c))
-        // colliders.reduce((handled, current) => handled || current(this, b, c), false)
+    this.matter.world.on('collisionstart', (ctx, entityA, entityB) => {
+        colliders.reduce((handled, current) => handled || current(this, entityA, entityB), false)
     })
   }
 
+    update(t, d) {
+        if (this._upKey.isDown) { this.player.move(0, -0.005) }
+        if (this._downKey.isDown) { this.player.move(0, 0.005) }
+        if (this._leftKey.isDown) { this.player.move(-0.005, 0) }
+        if (this._rightKey.isDown) { this.player.move(0.005, 0) }
 
-  update(t, d) {
-    if (this._upKey.isDown) { this.player.move(0, -0.005) }
-    if (this._downKey.isDown) { this.player.move(0, 0.005) }
-    if (this._leftKey.isDown) { this.player.move(-0.005, 0) }
-    if (this._rightKey.isDown) { this.player.move(0.005, 0) }
+        this.player.update(t, d)
 
-    this.player.update(t, d)
+        this.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
+        this.cashtracker.update(this.player.wonga)
+    }
 
-    this.energy.update(Math.floor((this.player.energy / this.player.maxEnergy ) * 100))
-    this.cashtracker.update(this.player.wonga)
-  }
-
-  _toggleTrack() {
+    _toggleTrack() {
         switch(this._tracked) {
             case 'player': {
                 this.earth.track()
@@ -136,7 +134,7 @@ export default class GameScene extends Phaser.Scene {
                 break;
             }
         }
-  }
+    }
 
     importAsteroids({ scene }) {
         return asteroidData.map(d => new Asteroid({ scene, x: d.x, y: d.y, velocity: { x: d.dx/2, y: d.dy/2 } }))

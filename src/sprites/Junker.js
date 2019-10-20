@@ -24,6 +24,9 @@ export default class JunkerSprite extends MatterSprite {
     
     update(t, d) {
         super.update(t, d)
+        if (!this.active) return
+
+        console.log(this)
         const { velocity } = this.body
         if (velocity.x !== 0 && velocity.y !== 0) {
             const angle = Math.atan2(velocity.x, -velocity.y)
@@ -34,6 +37,7 @@ export default class JunkerSprite extends MatterSprite {
     }
 
     move (x, y) {
+        if (!this.active) return
         if (this.expend(2)) {
             const force = new Phaser.Math.Vector2(x, y)
             this.applyForce(force)
@@ -41,6 +45,7 @@ export default class JunkerSprite extends MatterSprite {
     }
 
     expend(amount) {
+        if (!this.active) return false
         if (this.energy < amount) {
             return false
         }

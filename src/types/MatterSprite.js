@@ -33,6 +33,7 @@ export default class MatterSprite extends Phaser.Physics.Matter.Sprite {
     }
 
     track() {
+        if (!this.active) return
         const camera = this._scene.cameras.main
 
         camera.setLerp(0.1, 0.1)
