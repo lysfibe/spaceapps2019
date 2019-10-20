@@ -49,11 +49,7 @@ export default class GameScene extends Phaser.Scene {
         },
     }
 
-<<<<<<< HEAD
-    this.asteroids = this.importAste
-=======
     this.asteroids = this.importAsteroids({scene:this})
->>>>>>> Implement collisions for the earth
 
     bindKeymap(this, keymap)
 
@@ -89,16 +85,7 @@ export default class GameScene extends Phaser.Scene {
         }
   }
 
-<<<<<<< HEAD
-  importAsteroids({scene}){
-    const data = require('../data/full.json')
-    return data.map(d=>{
-        new Asteroid({scene, x:d.x, y:d.y, velocity:{x:d.dx, y:d.dy}, asset: 'asteroid'})
-    })
-  }
-=======
     importAsteroids({ scene }) {
         return asteroidData.map(d => new Asteroid({ scene, x: d.x, y: d.y, velocity: { x: d.dx, y: d.dy } }))
     }
->>>>>>> Implement collisions for the earth
 }
