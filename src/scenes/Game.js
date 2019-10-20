@@ -198,7 +198,7 @@ export default class GameScene extends Phaser.Scene {
 
     importAsteroids({ scene }) {
         return asteroidData.map(d => new Asteroid({
-            asset: this.getJunkType(),
+            asset: this.getJunkType(d),
             scene,
             x: d.x,
             y: d.y,
@@ -207,9 +207,12 @@ export default class GameScene extends Phaser.Scene {
         }))
     }
 
-    getJunkType(){
-        let junkTypes = ['asteroid-screw', 'asteroid-can', 'asteroid-satellite'];
-        let randomNumber = Math.floor(Math.random()*junkTypes.length);
-        return junkTypes[randomNumber];
+    getJunkType(item){
+        //let junkTypes = ['asteroid-screw', 'asteroid-can', 'asteroid-satellite'];
+        //let randomNumber = Math.floor(Math.random()*junkTypes.length);
+        //return junkTypes[randomNumber];
+        if (item['OBJECT_TYPE'] === 'PAYLOAD') return 'asteroid-satellite'
+        if (item['OBJECT_TYPE'] === 'ROCKET BODY') return 'asteroid-can'
+        return 'asteroid-screw'
     }
 }
